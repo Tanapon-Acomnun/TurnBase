@@ -1,0 +1,26 @@
+<views:BaseGamePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:views="clr-namespace:TurnBase.Views"
+                    x:Class="TurnBase.Views.ItemPage"
+                    Title="Items">
+
+    <VerticalStackLayout Padding="30"
+                         Spacing="20"
+                         VerticalOptions="Center">
+
+        <Label Text="Inventory"
+               FontSize="32"
+               HorizontalOptions="Center"/>
+
+        <Button Text="Potion (+20 HP)"
+                Clicked="OnPotionClicked"/>
+
+        <Button Text="Ether (+10 MP)"
+                Clicked="OnEtherClicked"/>
+
+        <Button Text="Back"
+                Clicked="OnBackClicked"/>
+
+    </VerticalStackLayout>
+
+</views:BaseGamePage>
