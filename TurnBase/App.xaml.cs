@@ -7,8 +7,7 @@ namespace TurnBase
     {
         public App()
         {
-            InitializeComponent();
-            MainPage = new BattlePage();
+            MainPage = new NavigationPage(new MainMenuPage());
         }
     }
 }

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseGamePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:views="clr-namespace:TurnBase.Views"
+                    x:Class="TurnBase.Views.UpgradePage"
+                    Title="Upgrade"
+                    BackgroundColor="#040210">
+
+    <Grid>
+
+        <!-- Background -->
+        <Image Source="start.png"
+               Aspect="AspectFill"
+               Opacity="0.25"/>
+
+        <BoxView Color="#040210"
+                 Opacity="0.65"/>
+
+        <ScrollView>
+
+            <VerticalStackLayout Padding="24,50,24,32"
+                                 Spacing="0">
+
+                <!-- Header -->
+                <Label Text="LEVEL UP"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="#c4a6ef"
+                       CharacterSpacing="4"
+                       HorizontalOptions="Center"
+                       FontFamily="Georgia"
+                       Margin="0,10,0,0"/>
+
+                <Label x:Name="PointsLabel"
+                       FontSize="15"
+                       TextColor="#c4b5fd"
+                       HorizontalOptions="Center"
+                       Margin="0,10,0,24"/>
+
+                <!-- Divider -->
+                <BoxView Color="#4c1d95"
+                         HeightRequest="1"
+                         WidthRequest="260"
+                         HorizontalOptions="Center"
+                         Margin="0,0,0,32"
+                         Opacity="0.7"/>
+
+                <!-- ATK -->
+                <Border Stroke="#dc2626"
+                        StrokeThickness="1.5"
+                        BackgroundColor="#240909"
+                        Padding="22,18"
+                        Margin="0,0,0,18">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+
+                    <Grid ColumnDefinitions="60,*,Auto"
+                          ColumnSpacing="16">
+
+                        <!-- Icon -->
+                        <Border BackgroundColor="#180606"
+                                Stroke="#dc2626"
+                                WidthRequest="54"
+                                HeightRequest="54">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+
+                            <Label Text="⚔️"
+                                   FontSize="28"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- Text -->
+                        <VerticalStackLayout Grid.Column="1"
+                                             VerticalOptions="Center">
+
+                            <Label Text="ATTACK"
+                                   FontSize="17"
+                                   FontAttributes="Bold"
+                                   TextColor="#fca5a5"
+                                   CharacterSpacing="2"
+                                   FontFamily="Georgia"/>
+
+                            <Label x:Name="AttackLabel"
+                                   Text="ATK: 0"
+                                   FontSize="16"
+                                   TextColor="#f87171"/>
+                        </VerticalStackLayout>
+
+                        <!-- Button -->
+                        <Border Grid.Column="2"
+                                BackgroundColor="#3b0a0a"
+                                Stroke="#dc2626"
+                                Padding="16,10"
+                                VerticalOptions="Center">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+
+                            <Label Text="+1"
+                                   FontSize="14"
+                                   TextColor="#fca5a5"
+                                   HorizontalOptions="Center"/>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnAttackUpgradeClicked"/>
+                            </Border.GestureRecognizers>
+
+                        </Border>
+
+                    </Grid>
+
+                </Border>
+
+                <!-- HP -->
+                <Border Stroke="#16a34a"
+                        StrokeThickness="1.5"
+                        BackgroundColor="#0f1a0a"
+                        Padding="22,18"
+                        Margin="0,0,0,18">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+
+                    <Grid ColumnDefinitions="60,*,Auto"
+                          ColumnSpacing="16">
+
+                        <!-- Icon -->
+                        <Border BackgroundColor="#081208"
+                                Stroke="#16a34a"
+                                WidthRequest="54"
+                                HeightRequest="54">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+
+                            <Label Text="❤️"
+                                   FontSize="28"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- Text -->
+                        <VerticalStackLayout Grid.Column="1"
+                                             VerticalOptions="Center">
+
+                            <Label Text="HEALTH"
+                                   FontSize="17"
+                                   FontAttributes="Bold"
+                                   TextColor="#86efac"
+                                   CharacterSpacing="2"
+                                   FontFamily="Georgia"/>
+
+                            <Label x:Name="HPLabel"
+                                   Text="HP: 0"
+                                   FontSize="16"
+                                   TextColor="#4ade80"/>
+                        </VerticalStackLayout>
+
+                        <!-- Button -->
+                        <Border Grid.Column="2"
+                                BackgroundColor="#10210d"
+                                Stroke="#16a34a"
+                                Padding="16,10"
+                                VerticalOptions="Center">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+
+                            <Label Text="+5"
+                                   FontSize="14"
+                                   TextColor="#86efac"
+                                   HorizontalOptions="Center"/>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnHPUpgradeClicked"/>
+                            </Border.GestureRecognizers>
+
+                        </Border>
+
+                    </Grid>
+
+                </Border>
+
+                <!-- MP -->
+                <Border Stroke="#2563eb"
+                        StrokeThickness="1.5"
+                        BackgroundColor="#0a1538"
+                        Padding="22,18"
+                        Margin="0,0,0,28">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+
+                    <Grid ColumnDefinitions="60,*,Auto"
+                          ColumnSpacing="16">
+
+                        <!-- Icon -->
+                        <Border BackgroundColor="#081126"
+                                Stroke="#2563eb"
+                                WidthRequest="54"
+                                HeightRequest="54">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+
+                            <Label Text="💧"
+                                   FontSize="28"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- Text -->
+                        <VerticalStackLayout Grid.Column="1"
+                                             VerticalOptions="Center">
+
+                            <Label Text="MANA"
+                                   FontSize="17"
+                                   FontAttributes="Bold"
+                                   TextColor="#93c5fd"
+                                   CharacterSpacing="2"
+                                   FontFamily="Georgia"/>
+
+                            <Label x:Name="MPLabel"
+                                   Text="MP: 0"
+                                   FontSize="16"
+                                   TextColor="#60a5fa"/>
+                        </VerticalStackLayout>
+
+                        <!-- Button -->
+                        <Border Grid.Column="2"
+                                BackgroundColor="#101d40"
+                                Stroke="#2563eb"
+                                Padding="16,10"
+                                VerticalOptions="Center">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+
+                            <Label Text="+5"
+                                   FontSize="14"
+                                   TextColor="#93c5fd"
+                                   HorizontalOptions="Center"/>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnMPUpgradeClicked"/>
+                            </Border.GestureRecognizers>
+
+                        </Border>
+
+                    </Grid>
+
+                </Border>
+
+                <Label Text="Unlock Skills"
+                   FontSize="24"
+                   TextColor="Gold"/>       
+
+                <VerticalStackLayout x:Name="SkillUnlockContainer"
+                     Spacing="10"/>
+
+                <!-- Divider -->
+                <BoxView Color="#4c1d95"
+                         HeightRequest="1"
+                         WidthRequest="260"
+                         HorizontalOptions="Center"
+                         Margin="0,0,0,24"
+                         Opacity="0.5"/>
+
+                <!-- Confirm Button -->
+                <Border Stroke="#7c3aed"
+                        StrokeThickness="1.5"
+                        BackgroundColor="#2a114d"
+                        Padding="0,16"
+                        WidthRequest="220"
+                        HorizontalOptions="Center">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+
+                    <Label Text="CONFIRM"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="#ddd6fe"
+                           CharacterSpacing="3"
+                           HorizontalOptions="Center"
+                           FontFamily="Georgia"/>
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnConfirmClicked"/>
+                    </Border.GestureRecognizers>
+
+                </Border>
+
+            </VerticalStackLayout>
+
+        </ScrollView>
+
+    </Grid>
+
+</views:BaseGamePage>
