@@ -31,32 +31,14 @@
                      HorizontalOptions="Center" Margin="0,16,0,16" Opacity="0.7"/>
 
             <!-- Victory message -->
-            <Label x:Name="VictoryMessageLabel"
-                   FontSize="16" TextColor="#fde68a"
-                   HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center"
-                   FontFamily="Georgia"
-                   Margin="0,0,0,32"/>
-
-            <!-- Upgrade Button -->
-            <Border Stroke="#d97706" StrokeThickness="1"
-                    BackgroundColor="#1a1008"
-                    Padding="0,14" WidthRequest="220"
-                    HorizontalOptions="Center"
-                    Margin="0,0,0,14">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="4"/>
-                </Border.StrokeShape>
-                <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
-                    <Label Text="⬆️" FontSize="18" HorizontalOptions="Center"/>
-                    <Label Text="UPGRADE CHARACTER" FontSize="16"
-                           TextColor="#fcd34d" CharacterSpacing="1"
-                           FontFamily="Georgia" HorizontalOptions="Center"/>
-                </VerticalStackLayout>
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnUpgradeClicked"/>
-                </Border.GestureRecognizers>
-            </Border>
+            <Label Text="{Binding RewardText}"
+                   FontSize="20"
+                   TextColor="Gold"
+                   HorizontalOptions="Center"/>
+            <Label Text="{Binding CurrencyText}"
+                   FontSize="18"
+                   TextColor="White"
+                   HorizontalOptions="Center"/> 
 
             <!-- Next Battle Button -->
             <Border Stroke="#7c3aed" StrokeThickness="1"
@@ -68,7 +50,7 @@
                 </Border.StrokeShape>
                 <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
                     <Label Text="⚔️" FontSize="18" HorizontalOptions="Center"/>
-                    <Label Text="NEXT BATTLE" FontSize="16"
+                    <Label Text="PROCEED" FontSize="16"
                            TextColor="#c4b5fd" CharacterSpacing="1"
                            FontFamily="Georgia" HorizontalOptions="Center"/>
                 </VerticalStackLayout>

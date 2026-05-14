@@ -15,8 +15,8 @@ namespace TurnBase.ViewModels
                 {
                     Name = "Wizard",
                     MaxHP = 70,
-                    Attack = 12,
-                    MP = 30
+                    Attack = 10,
+                    MaxMP = 30
                 },
 
                 new CharacterClass
@@ -24,15 +24,15 @@ namespace TurnBase.ViewModels
                     Name = "Warrior",
                     MaxHP = 100,
                     Attack = 15,
-                    MP = 10
+                    MaxMP = 10
                 },
 
                 new CharacterClass
                 {
                     Name = "Knight",
                     MaxHP = 120,
-                    Attack = 10,
-                    MP = 5
+                    Attack = 12,
+                    MaxMP = 15
                 }
             };
         }

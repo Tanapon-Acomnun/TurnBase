@@ -110,7 +110,6 @@ namespace TurnBase.ViewModels
 
             string statusLog = "";
 
-            // Process player status once
             statusLog += _battleService.ProcessPlayerStatusEffects(Player);
 
             string log = "";
@@ -125,12 +124,6 @@ namespace TurnBase.ViewModels
                     log = _battleService.Guard(Player);
                     break;
 
-                case "Skill:Fireball":
-                case "Skill:ShieldBash":
-                case "Skill:RageSlash":
-                    log = _battleService.UseSkill(Player, Enemy);
-                    break;
-
                 case "Item:Potion":
                     log = _battleService.UsePotion(Player);
                     break;
@@ -142,7 +135,6 @@ namespace TurnBase.ViewModels
 
             BattleLog = statusLog + log;
 
-            // Invalid action check
             if (log.Contains("No ") ||
                 log.Contains("already full") ||
                 log.Contains("Not enough MP") ||
@@ -176,9 +168,13 @@ namespace TurnBase.ViewModels
                     log += "\n" + enemyStatusLog;
                 }
 
-                // Enemy may die from status effect
+                // Refresh buffs without ticking durations
+                _battleService.RefreshPlayerBuffs(Player);
+
+                // Enemy may die from status
                 if (Enemy.IsAlive)
                 {
+                    _battleService.RefreshEnemyBuffs(Enemy);
                     log += "\n" + _battleService.EnemyTurn(Player, Enemy);
                 }
             }
@@ -201,11 +197,66 @@ namespace TurnBase.ViewModels
 
             _isProcessingTurn = false;
         }
+
+        public async Task ExecuteSkillTurn(Skill skill)
+        {
+            if (_isProcessingTurn || !Player.IsAlive || !Enemy.IsAlive)
+                return;
+
+            _isProcessingTurn = true;
+
+            string statusLog = "";
+
+            statusLog += _battleService.ProcessPlayerStatusEffects(Player);
+
+            string log =
+                _battleService.UseSkill(Player, Enemy, skill);
+
+            BattleLog = statusLog + log;
+
+            OnPropertyChanged(nameof(Player));
+            OnPropertyChanged(nameof(Enemy));
+
+            await Task.Delay(1000);
+
+            if (Enemy.IsAlive)
+            {
+                string enemyStatusLog =
+                    _battleService.ProcessEnemyStatusEffects(Enemy);
+
+                if (!string.IsNullOrWhiteSpace(enemyStatusLog))
+                {
+                    log += "\n" + enemyStatusLog;
+                }
+
+                // Refresh player buffs before enemy attacks
+                _battleService.RefreshPlayerBuffs(Player);
+
+                if (Enemy.IsAlive)
+                {
+                    _battleService.RefreshEnemyBuffs(Enemy);
+                    log += "\n" + _battleService.EnemyTurn(Player, Enemy);
+                }
+            }
+
+            BattleLog = statusLog + log;
+
+            OnPropertyChanged(nameof(Player));
+            OnPropertyChanged(nameof(Enemy));
+
+            _isProcessingTurn = false;
+        }
+
         public string PlayerStatusText =>
-        string.Join(", ", Player.StatusEffects);
+        string.Join(", ",
+        Player.StatusEffects.Select(
+        s => $"{s.Key}({s.Value})"));
 
         public string EnemyStatusText =>
-            string.Join(", ", Enemy.StatusEffects);
+        string.Join(", ",
+        Enemy.StatusEffects.Select(
+        s => $"{s.Key}({s.Value})"));
+
         public bool IsPlayerTurnReady => !_isProcessingTurn && Player.IsAlive && Enemy.IsAlive;
 
     }

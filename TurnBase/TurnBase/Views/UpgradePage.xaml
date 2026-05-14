@@ -264,6 +264,13 @@
 
                 </Border>
 
+                <Label Text="Unlock Skills"
+                   FontSize="24"
+                   TextColor="Gold"/>       
+
+                <VerticalStackLayout x:Name="SkillUnlockContainer"
+                     Spacing="10"/>
+
                 <!-- Divider -->
                 <BoxView Color="#4c1d95"
                          HeightRequest="1"

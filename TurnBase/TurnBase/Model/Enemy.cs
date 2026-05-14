@@ -9,6 +9,11 @@ namespace TurnBase.Model
         public string Sprite { get; set; }
         public string EnemyType { get; set; }
         public bool IsGuarding { get; set; } = false;
-        public List<string> StatusEffects { get; set; } = new();
+        public Dictionary<string, int> StatusEffects
+        { get; set; } = new();
+
+        public int AttackModifier { get; set; } = 0;
+
+        public int DefenseModifier { get; set; } = 0;
     }
 }
