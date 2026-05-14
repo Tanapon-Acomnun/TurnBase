@@ -13,124 +13,59 @@ public partial class UpgradePage : BaseGamePage
         _player = player;
 
         RefreshUI();
-
-        GenerateSkillUnlocks();
     }
 
     private void RefreshUI()
     {
-        PointsLabel.Text =
-            $"Available Stat Points: {_player.Currency}";
+        PointsLabel.Text = $"Available Stat Points: {_player.StatPoints}";
 
-        AttackLabel.Text =
-            $"ATK: {_player.Attack}";
-
-        HPLabel.Text =
-            $"HP: {_player.MaxHP}";
-
-        MPLabel.Text =
-            $"MP: {_player.MaxMP}";
+        AttackLabel.Text = $"ATK: {_player.Attack}";
+        HPLabel.Text = $"HP: {_player.MaxHP}";
+        MPLabel.Text = $"MP: {_player.MP}";
     }
 
-    private bool HasCurrency(int amount)
+    private bool HasPoints()
     {
-        return _player.Currency >= amount;
+        return _player.StatPoints > 0;
     }
 
     private void OnAttackUpgradeClicked(object sender, EventArgs e)
     {
-        if (!HasCurrency(1))
-            return;
+        if (!HasPoints()) return;
 
         _player.Attack += 1;
-
-        _player.Currency -= 1;
+        _player.StatPoints--;
 
         RefreshUI();
-
-        GenerateSkillUnlocks();
     }
 
     private void OnHPUpgradeClicked(object sender, EventArgs e)
     {
-        if (!HasCurrency(1))
-            return;
+        if (!HasPoints()) return;
 
         _player.MaxHP += 5;
-
         _player.CurrentHP += 5;
-
-        _player.Currency -= 1;
+        _player.StatPoints--;
 
         RefreshUI();
-
-        GenerateSkillUnlocks();
     }
 
     private void OnMPUpgradeClicked(object sender, EventArgs e)
     {
-        if (!HasCurrency(1))
-            return;
+        if (!HasPoints()) return;
 
         _player.MaxMP += 5;
-
         _player.MP += 5;
-
-        _player.Currency -= 1;
+        _player.StatPoints--;
 
         RefreshUI();
-
-        GenerateSkillUnlocks();
     }
 
     private async void OnConfirmClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(
-            new BattlePage(_player));
-    }
+        _player.Level++;
 
-    private void GenerateSkillUnlocks()
-    {
-        SkillUnlockContainer.Children.Clear();
-
-        foreach (var skill in _player.UnlockableSkills)
-        {
-            var button = new Button
-            {
-                Text =
-                    $"Unlock {skill.Name} ({skill.UnlockCost} Currency)"
-            };
-
-            button.Clicked += (s, e) =>
-            {
-                UnlockSkill(skill);
-            };
-
-            SkillUnlockContainer.Children.Add(button);
-        }
-    }
-
-    private void UnlockSkill(Skill skill)
-    {
-        if (!HasCurrency(skill.UnlockCost))
-            return;
-
-        _player.Currency -= skill.UnlockCost;
-
-        // Passive unlocks
-        if (skill.Name == "Lifesteal")
-        {
-            _player.HasLifesteal = true;
-        }
-        else
-        {
-            _player.Skills.Add(skill);
-        }
-
-        _player.UnlockableSkills.Remove(skill);
-
-        RefreshUI();
-
-        GenerateSkillUnlocks();
+        // Move to next battle
+        await Navigation.PushAsync(new BattlePage(_player));
     }
 }

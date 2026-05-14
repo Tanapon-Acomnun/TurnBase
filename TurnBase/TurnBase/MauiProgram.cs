@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using Plugin.Maui.Audio;
+using TurnBase.Services;
 
 namespace TurnBase
 {
@@ -7,6 +9,7 @@ namespace TurnBase
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -15,8 +18,14 @@ namespace TurnBase
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            // Audio Manager
+            builder.Services.AddSingleton(AudioManager.Current);
+
+            // Services
+            builder.Services.AddSingleton<AudioService>();
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

@@ -7,6 +7,5 @@ public class CharacterClass
    public int MaxHP { get; set; }
    public int Attack { get; set; }
    public int MP { get; set; }
-   public int MaxMP { get; set; }
-    public string Sprite { get; set; }
+   public string Sprite { get; set; }
 }

@@ -14,31 +14,21 @@ public partial class VictoryPage : BaseGamePage
 
         _player.BattleNumber++;
 
-        player.Currency += 3;
+        _player.StatPoints += 3;
 
-        BindingContext = this;
-
-        player.Stage++;
+        VictoryMessageLabel.Text =
+            $"{_player.Name} won the battle!\n\n+3 Stat Points!";
     }
 
-
-    public string RewardText =>
-    "Earned 10 Currency!";
-    public string CurrencyText =>
-    $"Total Currency: {_player.Currency}";
+    private async void OnUpgradeClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new UpgradePage(_player));
+        Navigation.RemovePage(this);
+    }
 
     private async void OnNextBattleClicked(object sender, EventArgs e)
     {
-
-        if (_player.Stage % 3 == 0)
-        {
-            await Navigation.PushAsync(
-                new UpgradePage(_player));
-        }
-        else
-        {
-            await Navigation.PushAsync(
-                new BattlePage(_player));
-        }
+        await Navigation.PushAsync(new BattlePage(_player));
+        Navigation.RemovePage(this);
     }
 }

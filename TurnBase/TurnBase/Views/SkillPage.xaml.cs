@@ -2,59 +2,64 @@ using TurnBase.Model;
 
 namespace TurnBase.Views;
 
-public partial class SkillPage : BaseGamePage
+public partial class SkillPage : ContentPage
 {
+    private readonly Action<string> _onSkillSelected;
+
     private Character _player;
 
-    private readonly Action<Skill> _onSkillSelected;
-
-    private List<Skill> _skills;
-
-    public SkillPage(Character player, Action<Skill> onSkillSelected)
+    public SkillPage(
+        Character player,
+        Action<string> onSkillSelected)
     {
         InitializeComponent();
 
-        _skills = player.Skills;
+        _player = player;
 
         _onSkillSelected = onSkillSelected;
 
-        GenerateSkillButtons();
+        LoadSkills();
     }
 
-    private void GenerateSkillButtons()
+    private void LoadSkills()
     {
-        foreach (var skill in _skills)
+        SkillContainer.Children.Clear();
+
+        if (_player.Name == "Wizard")
         {
-            var button = new Button
-            {
-                Text = skill.MPCost > 0
-                ? $"{skill.Name} (-{skill.MPCost} MP)"
-                : skill.SelfDamage > 0
-                    ? $"{skill.Name} (-{skill.SelfDamage} HP)"
-                    : skill.Name,
+            AddSkillButton("Fireball");
+        }
 
-                BackgroundColor = Color.FromArgb("#1e1b4b"),
+        if (_player.Name == "Knight")
+        {
+            AddSkillButton("Shield Bash");
+        }
 
-                TextColor = Colors.White,
-
-                CornerRadius = 10,
-
-                FontSize = 16
-            };
-
-            button.Clicked += async (s, e) =>
-            {
-                _onSkillSelected.Invoke(skill);
-
-                await Navigation.PopAsync();
-            };
-
-            SkillContainer.Children.Add(button);
+        if (_player.Name == "Berserker")
+        {
+            AddSkillButton("Rage Slash");
         }
     }
 
-    private async void OnBackClicked(object sender, EventArgs e)
+    private void AddSkillButton(string skillName)
     {
-        await Navigation.PopAsync();
+        Button skillButton = new Button
+        {
+            Text = skillName,
+            FontSize = 18,
+            BackgroundColor = Color.FromArgb("#5b21b6"),
+            TextColor = Colors.White,
+            CornerRadius = 10,
+            Margin = new Thickness(0, 10)
+        };
+
+        skillButton.Clicked += async (s, e) =>
+        {
+            _onSkillSelected?.Invoke(skillName);
+
+            await Navigation.PopAsync();
+        };
+
+        SkillContainer.Children.Add(skillButton);
     }
 }
