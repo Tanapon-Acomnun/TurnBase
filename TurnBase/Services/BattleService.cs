@@ -104,12 +104,53 @@ namespace TurnBase.Services
 
         private string KnightSkill(Character player, Enemy enemy)
         {
-            return $"{player.Name} skill is not implemented yet!";
+            const int manaCost = 4;
+
+            if (player.MP < manaCost)
+            {
+                return "Not enough MP!";
+            }
+
+            player.MP -= manaCost;
+
+            int damage = player.Attack + 6;
+
+            enemy.CurrentHP -= damage;
+
+            if (enemy.CurrentHP < 0)
+                enemy.CurrentHP = 0;
+
+            enemy.IsGuarding = true;
+
+            return $"{player.Name} uses Shield Bash for {damage} damage and stuns the enemy!";
         }
 
         private string BerserkerSkill(Character player, Enemy enemy)
         {
-            return $"{player.Name} skill is not implemented yet!";
+            const int manaCost = 3;
+
+            if (player.MP < manaCost)
+            {
+                return "Not enough MP!";
+            }
+
+            player.MP -= manaCost;
+
+            int selfDamage = 5;
+
+            player.CurrentHP -= selfDamage;
+
+            if (player.CurrentHP < 1)
+                player.CurrentHP = 1;
+
+            int damage = player.Attack + 15;
+
+            enemy.CurrentHP -= damage;
+
+            if (enemy.CurrentHP < 0)
+                enemy.CurrentHP = 0;
+
+            return $"{player.Name} uses Rage Slash! Deals {damage} damage but loses {selfDamage} HP!";
         }
         public string UsePotion(Character player)
         {

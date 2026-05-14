@@ -2,49 +2,64 @@ using TurnBase.Model;
 
 namespace TurnBase.Views;
 
-public partial class SkillPage : BaseGamePage
+public partial class SkillPage : ContentPage
 {
-    private Character _player;
-
     private readonly Action<string> _onSkillSelected;
 
-    public SkillPage(Character player, Action<string> onSkillSelected)
+    private Character _player;
+
+    public SkillPage(
+        Character player,
+        Action<string> onSkillSelected)
     {
         InitializeComponent();
 
         _player = player;
+
         _onSkillSelected = onSkillSelected;
 
-        SetupSkills();
+        LoadSkills();
     }
 
-    private void SetupSkills()
+    private void LoadSkills()
     {
-        switch (_player.Name)
+        SkillContainer.Children.Clear();
+
+        if (_player.Name == "Wizard")
         {
-            case "Wizard":
-                SkillButton1.Text = "Fireball";
-                break;
+            AddSkillButton("Fireball");
+        }
 
-            case "Knight":
-                SkillButton1.Text = "Shield Bash";
-                break;
+        if (_player.Name == "Knight")
+        {
+            AddSkillButton("Shield Bash");
+        }
 
-            case "Berserker":
-                SkillButton1.Text = "Rage Slash";
-                break;
+        if (_player.Name == "Berserker")
+        {
+            AddSkillButton("Rage Slash");
         }
     }
 
-    private async void OnSkill1Clicked(object sender, EventArgs e)
+    private void AddSkillButton(string skillName)
     {
-        _onSkillSelected.Invoke(SkillButton1.Text);
+        Button skillButton = new Button
+        {
+            Text = skillName,
+            FontSize = 18,
+            BackgroundColor = Color.FromArgb("#5b21b6"),
+            TextColor = Colors.White,
+            CornerRadius = 10,
+            Margin = new Thickness(0, 10)
+        };
 
-        await Navigation.PopAsync();
-    }
+        skillButton.Clicked += async (s, e) =>
+        {
+            _onSkillSelected?.Invoke(skillName);
 
-    private async void OnBackClicked(object sender, EventArgs e)
-    {
-        await Navigation.PopAsync();
+            await Navigation.PopAsync();
+        };
+
+        SkillContainer.Children.Add(skillButton);
     }
 }

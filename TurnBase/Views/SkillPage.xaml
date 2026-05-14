@@ -1,28 +1,22 @@
-<views:BaseGamePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:views="clr-namespace:TurnBase.Views"
-                    x:Class="TurnBase.Views.SkillPage"
-                    Title="Skills">
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TurnBase.Views.SkillPage"
+             BackgroundColor="#040210">
 
-    <VerticalStackLayout Padding="30"
-                         Spacing="20"
-                         VerticalOptions="Center">
+    <ScrollView>
 
-        <Label Text="Skills"
-               FontSize="32"
-               HorizontalOptions="Center"/>
+        <VerticalStackLayout
+            x:Name="SkillContainer"
+            Padding="30"
+            Spacing="20">
 
-        <!-- Dynamic skill buttons will go here -->
+            <Label Text="SKILLS"
+                   FontSize="28"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
 
-        <Button x:Name="SkillButton1"
-                Clicked="OnSkill1Clicked"/>
+        </VerticalStackLayout>
 
-        <Button x:Name="SkillButton2"
-                IsVisible="False"/>
+    </ScrollView>
 
-        <Button Text="Back"
-                Clicked="OnBackClicked"/>
-
-    </VerticalStackLayout>
-
-</views:BaseGamePage>
+</ContentPage>

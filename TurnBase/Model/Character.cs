@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TurnBase.Model;
 
 namespace TurnBase.Model
 {
@@ -22,5 +23,6 @@ namespace TurnBase.Model
         public string Sprite { get; set; }
         public int BattleNumber { get; set; } = 1;
         public List<string> StatusEffects { get; set; } = new();
+       
     }
 }

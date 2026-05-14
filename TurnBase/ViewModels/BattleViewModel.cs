@@ -110,12 +110,10 @@ namespace TurnBase.ViewModels
 
             string statusLog = "";
 
+            // Process player status once
             statusLog += _battleService.ProcessPlayerStatusEffects(Player);
-
 
             string log = "";
-
-            statusLog += _battleService.ProcessPlayerStatusEffects(Player);
 
             switch (actionType)
             {
@@ -128,6 +126,8 @@ namespace TurnBase.ViewModels
                     break;
 
                 case "Skill:Fireball":
+                case "Skill:ShieldBash":
+                case "Skill:RageSlash":
                     log = _battleService.UseSkill(Player, Enemy);
                     break;
 
@@ -142,6 +142,7 @@ namespace TurnBase.ViewModels
 
             BattleLog = statusLog + log;
 
+            // Invalid action check
             if (log.Contains("No ") ||
                 log.Contains("already full") ||
                 log.Contains("Not enough MP") ||
@@ -175,7 +176,7 @@ namespace TurnBase.ViewModels
                     log += "\n" + enemyStatusLog;
                 }
 
-                // Enemy may die from status
+                // Enemy may die from status effect
                 if (Enemy.IsAlive)
                 {
                     log += "\n" + _battleService.EnemyTurn(Player, Enemy);
