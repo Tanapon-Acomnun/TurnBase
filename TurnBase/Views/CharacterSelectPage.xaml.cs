@@ -1,13 +1,21 @@
 using TurnBase.Model;
+using TurnBase.Services;
 
 namespace TurnBase.Views;
 
 public partial class CharacterSelectPage : ContentPage
 {
+    private AudioService _audioService;
+
     public CharacterSelectPage()
     {
         InitializeComponent();
+
         NavigationPage.SetHasNavigationBar(this, false);
+
+        _audioService =
+            Application.Current?.Handler?.MauiContext?.Services
+            ?.GetService<AudioService>();
     }
 
     private async void OnWizardClicked(object sender, EventArgs e)
@@ -20,7 +28,6 @@ public partial class CharacterSelectPage : ContentPage
             MP = 30,
             Sprite = "wizardback.png"
         };
-        
 
         await SelectClass(selectedClass);
     }
@@ -55,6 +62,11 @@ public partial class CharacterSelectPage : ContentPage
 
     private async Task SelectClass(CharacterClass selectedClass)
     {
+        // =========================
+        // STOP MAIN MENU BGM
+        // =========================
+        _audioService?.StopBgm();
+
         var player = new Character
         {
             Name = selectedClass.Name,
@@ -65,10 +77,12 @@ public partial class CharacterSelectPage : ContentPage
             MaxMP = selectedClass.MP,
             Sprite = selectedClass.Sprite
         };
+
         // Assign starter skills
         switch (player.Name)
         {
             case "Wizard":
+
                 player.Skills.Add(new Skill
                 {
                     Name = "Fireball",
@@ -79,6 +93,7 @@ public partial class CharacterSelectPage : ContentPage
                     Duration = 3,
                     Description = "Deals fire damage and inflicts Burn."
                 });
+
                 player.Skills.Add(new Skill
                 {
                     Name = "Arcane Shield",
@@ -89,6 +104,7 @@ public partial class CharacterSelectPage : ContentPage
                     Effect = "DefenseUp",
                     Description = "Raises defense for 3 turns."
                 });
+
                 player.UnlockableSkills.Add(new Skill
                 {
                     Name = "Ice Bolt",
@@ -97,10 +113,10 @@ public partial class CharacterSelectPage : ContentPage
                     Effect = "AttackDown",
                     Duration = 2,
                     SkillType = "Damage",
-                    Description =
-                    "A chilling magical attack.",
+                    Description = "A chilling magical attack.",
                     UnlockCost = 5
                 });
+
                 player.UnlockableSkills.Add(new Skill
                 {
                     Name = "Mana Surge",
@@ -112,9 +128,11 @@ public partial class CharacterSelectPage : ContentPage
                     Description = "Restore magical energy.",
                     UnlockCost = 5
                 });
+
                 break;
 
             case "Knight":
+
                 player.Skills.Add(new Skill
                 {
                     Name = "Shield Bash",
@@ -123,8 +141,7 @@ public partial class CharacterSelectPage : ContentPage
                     Effect = "AttackDown",
                     Duration = 3,
                     SkillType = "Damage",
-                    Description =
-                        "A controlling shield strike."
+                    Description = "A controlling shield strike."
                 });
 
                 player.Skills.Add(new Skill
@@ -132,7 +149,7 @@ public partial class CharacterSelectPage : ContentPage
                     Name = "Fortify",
                     ExtraEffects = new List<string>
                     {
-                      "Regen"
+                        "Regen"
                     },
                     MPCost = 5,
                     Power = 0,
@@ -141,6 +158,7 @@ public partial class CharacterSelectPage : ContentPage
                     SkillType = "Buff",
                     Description = "Increase defense and endure."
                 });
+
                 player.UnlockableSkills.Add(new Skill
                 {
                     Name = "Counter Stance",
@@ -151,6 +169,7 @@ public partial class CharacterSelectPage : ContentPage
                     Description = "Reduce and reflect damage.",
                     UnlockCost = 5
                 });
+
                 player.UnlockableSkills.Add(new Skill
                 {
                     Name = "Taunt Slam",
@@ -166,6 +185,7 @@ public partial class CharacterSelectPage : ContentPage
                 break;
 
             case "Berserker":
+
                 player.Skills.Add(new Skill
                 {
                     Name = "Rage Slash",
@@ -174,8 +194,7 @@ public partial class CharacterSelectPage : ContentPage
                     Effect = "None",
                     Duration = 0,
                     SkillType = "Damage",
-                    Description =
-                        "A brutal heavy slash."
+                    Description = "A brutal heavy slash."
                 });
 
                 player.Skills.Add(new Skill
@@ -189,12 +208,14 @@ public partial class CharacterSelectPage : ContentPage
                     SkillType = "Buff",
                     Description = "Increase attack at the cost of HP."
                 });
+
                 player.UnlockableSkills.Add(new Skill
                 {
                     Name = "Lifesteal",
                     Description = "Passive: Heal after attacking.",
                     UnlockCost = 5
                 });
+
                 player.UnlockableSkills.Add(new Skill
                 {
                     Name = "Execute",

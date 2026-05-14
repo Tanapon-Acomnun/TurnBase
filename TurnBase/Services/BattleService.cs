@@ -66,6 +66,15 @@ namespace TurnBase.Services
                 case "Skeleton":
                     return SkeletonTurn(player, enemy);
 
+                case "Boss":
+                    return BossTurn(player, enemy);
+
+                case "DarkKnight":
+                    return DarkKnightTurn(player, enemy);
+
+                case "Wolf":
+                    return WolfTurn(player, enemy);
+
                 default:
                     return BasicEnemyAttack(player, enemy);
             }
@@ -376,6 +385,133 @@ namespace TurnBase.Services
                 enemy.IsGuarding = true;
 
                 return $"{enemy.Name} raises its shield!";
+            }
+
+            return BasicEnemyAttack(player, enemy);
+        }
+        private string BossTurn(Character player, Enemy enemy)
+        {
+            Random rng = new();
+
+            int roll = rng.Next(100);
+
+            // =========================================
+            // SLIME KING
+            // =========================================
+            if (enemy.Name == "Slime King")
+            {
+                // 35% poison slam
+                if (roll < 35)
+                {
+                    player.StatusEffects["Poison"] = 4;
+
+                    return $"{enemy.Name} uses Toxic Slam! {player.Name} is poisoned!";
+                }
+
+                return BasicEnemyAttack(player, enemy);
+            }
+
+            // =========================================
+            // ORC WARLORD
+            // =========================================
+            if (enemy.Name == "Orc Warlord")
+            {
+                // Rage attack
+                if (roll < 30)
+                {
+                    int damage = enemy.Attack * 2;
+
+                    player.CurrentHP -= damage;
+
+                    if (player.CurrentHP < 0)
+                    {
+                        player.CurrentHP = 0;
+                    }
+
+                    return $"{enemy.Name} uses Berserker Smash for {damage} damage!";
+                }
+
+                return BasicEnemyAttack(player, enemy);
+            }
+
+            // =========================================
+            // DEMON LORD
+            // =========================================
+            if (enemy.Name == "Demon Lord")
+            {
+                // Burn attack
+                if (roll < 40)
+                {
+                    player.StatusEffects["Burn"] = 4;
+
+                    return $"{enemy.Name} casts Hellfire! {player.Name} is burned!";
+                }
+
+                // Curse attack
+                if (roll >= 40 && roll < 70)
+                {
+                    player.StatusEffects["Poison"] = 5;
+
+                    return $"{enemy.Name} casts Dark Curse! {player.Name} is poisoned!";
+                }
+
+                return BasicEnemyAttack(player, enemy);
+            }
+
+            return BasicEnemyAttack(player, enemy);
+        }
+
+        private string WolfTurn(Character player, Enemy enemy)
+        {
+            Random rng = new();
+
+            int roll = rng.Next(100);
+
+            // Fast bite
+            if (roll < 30)
+            {
+                int damage = enemy.Attack + 10;
+
+                player.CurrentHP -= damage;
+
+                if (player.CurrentHP < 0)
+                {
+                    player.CurrentHP = 0;
+                }
+
+                return $"{enemy.Name} uses Savage Bite for {damage} damage!";
+            }
+
+            return BasicEnemyAttack(player, enemy);
+        }
+
+        private string DarkKnightTurn(Character player, Enemy enemy)
+        {
+            Random rng = new();
+
+            int roll = rng.Next(100);
+
+            // Defense stance
+            if (roll < 25)
+            {
+                enemy.DefenseModifier = 10;
+
+                return $"{enemy.Name} enters Defensive Stance!";
+            }
+
+            // Heavy slash
+            if (roll >= 25 && roll < 50)
+            {
+                int damage = enemy.Attack + 15;
+
+                player.CurrentHP -= damage;
+
+                if (player.CurrentHP < 0)
+                {
+                    player.CurrentHP = 0;
+                }
+
+                return $"{enemy.Name} uses Dark Slash for {damage} damage!";
             }
 
             return BasicEnemyAttack(player, enemy);
