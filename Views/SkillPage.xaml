@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseGamePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:views="clr-namespace:TurnBase.Views"
+                    x:Class="TurnBase.Views.SkillPage"
+                    Title="Skills"
+                    BackgroundColor="#040210">
+
+    <Grid>
+        <Image Source="skillback.png" Aspect="AspectFill" Opacity="0.3"/>
+        <BoxView Color="#040210" Opacity="0.6"/>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="24,48,24,32" Spacing="0">
+
+                <!-- Header -->
+                <Label Text="🔮" FontSize="36"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,8"/>
+
+                <Label Text="SKILLS"
+                       FontSize="22" FontAttributes="Bold"
+                       TextColor="#c4a6ef" CharacterSpacing="4"
+                       HorizontalOptions="Center"
+                       FontFamily="Georgia"/>
+
+                <!-- Divider -->
+                <BoxView Color="#4c1d95" HeightRequest="1" WidthRequest="260"
+                         HorizontalOptions="Center"
+                         Margin="0,12,0,28" Opacity="0.7"/>
+
+                <!-- Dynamic skill cards -->
+                <VerticalStackLayout x:Name="SkillContainer" Spacing="14"/>
+
+                <!-- Divider -->
+                <BoxView Color="#4c1d95" HeightRequest="1" WidthRequest="260"
+                         HorizontalOptions="Center"
+                         Margin="0,8,0,20" Opacity="0.5"/>
+
+                <!-- Back -->
+                <Border Stroke="#6d28d9" StrokeThickness="1"
+                        BackgroundColor="#1e0a38"
+                        Padding="0,12" WidthRequest="160"
+                        HorizontalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="4"/>
+                    </Border.StrokeShape>
+                    <Label Text="← BACK" FontSize="12"
+                           TextColor="#c4b5fd" CharacterSpacing="2"
+                           FontFamily="Georgia"
+                           HorizontalOptions="Center"/>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackClicked"/>
+                    </Border.GestureRecognizers>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
+</views:BaseGamePage>
