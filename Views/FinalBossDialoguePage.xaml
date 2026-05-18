@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TurnBase.Views.FinalBossDialoguePage"
+             BackgroundColor="#040210"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid>
+        <Image Source="bgfinalboss.png" 
+               Aspect="AspectFill" 
+               Opacity="1"/>
+
+        <BoxView Color="#040210" Opacity="0.2"/>
+
+        <Grid ColumnDefinitions="*, *">
+            <Image x:Name="ImgLeft" 
+                   Grid.Column="0" 
+                   VerticalOptions="End" 
+                   HeightRequest="420" 
+                   Margin="0,0,0,100"/>
+
+            <Image x:Name="ImgRight" 
+                   Grid.Column="1" 
+                   VerticalOptions="End" 
+                   HeightRequest="500" 
+                   Scale="2"
+                   Margin="0,0,0,100" 
+                   Source="demonlord.png"/>
+        </Grid>
+
+        <Grid VerticalOptions="End" Padding="20,0,20,40">
+            <Border BackgroundColor="#CC000000" 
+                    Stroke="#4c1d95" 
+                    StrokeThickness="3" 
+                    Padding="25">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15"/>
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="10">
+                    <Label x:Name="LblName" 
+                           TextColor="#D8B4FE" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           FontFamily="Georgia"/>
+
+                    <Label x:Name="LblMessage" 
+                           TextColor="#f8fafc" 
+                           FontSize="14" 
+                           LineHeight="1.5" 
+                           HorizontalTextAlignment="Start"
+                           FontFamily="Georgia"/>
+
+                    <Label Text="►" 
+                           FontSize="18" 
+                           TextColor="#7c3aed" 
+                           HorizontalOptions="End" 
+                           Margin="0,15,0,0"
+                           FontAttributes="Italic"/>
+                </VerticalStackLayout>
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNextClicked"/>
+                </Border.GestureRecognizers>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

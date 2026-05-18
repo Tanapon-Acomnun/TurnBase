@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:TurnBase.Views"
+             x:Class="TurnBase.Views.ProloguePage"
+             BackgroundColor="#040210"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="*, Auto">
+
+        <Image x:Name="ImgBackground" 
+               Grid.Row="0" 
+               Grid.RowSpan="2"
+               Aspect="AspectFill" />
+
+        <BoxView Grid.Row="0" 
+                 Grid.RowSpan="2" 
+                 Color="Black" 
+                 Opacity="0.5" />
+
+
+        <Image x:Name="ImgScene" 
+               Grid.Row="0"
+               Aspect="AspectFill" 
+               Opacity="0.4" />
+
+        <ScrollView x:Name="StoryScrollView" 
+                    Grid.Row="0" 
+                    Margin="20,0,20,80"
+                    VerticalOptions="End">
+            <Label x:Name="LblStory" 
+                   TextColor="#e2e8f0" 
+                   FontSize="15" 
+                   LineHeight="1.5"
+                   FontFamily="Georgia" 
+                   Margin="10, 20" />
+        </ScrollView>
+
+        <VerticalStackLayout x:Name="TitleLayout" 
+                             Grid.Row="0"
+                             VerticalOptions="Center" 
+                             HorizontalOptions="Center" 
+                             InputTransparent="True"
+                             Opacity="0"
+                             Margin="20">
+
+            <Label x:Name="LblTitle" 
+                   TextColor="#D8B4FE" 
+                   FontSize="26" 
+                   FontAttributes="Bold" 
+                   HorizontalTextAlignment="Center" 
+                   FontFamily="Georgia" />
+
+            <BoxView Color="#D8B4FE" 
+                     HeightRequest="2" 
+                     WidthRequest="200" 
+                     HorizontalOptions="Center" 
+                     Margin="0,15,0,0"/>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1" Padding="20,10,20,40" BackgroundColor="Transparent">
+            <Button x:Name="BtnNext" 
+                    Text="ถัดไป ►" 
+                    BackgroundColor="Transparent"
+                    TextColor="#D8B4FE"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="End"
+                    Clicked="OnNextClicked" />
+        </Grid>
+
+    </Grid>
+</ContentPage>

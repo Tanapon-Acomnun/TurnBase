@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseGamePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:views="clr-namespace:TurnBase.Views"
+                    x:Class="TurnBase.Views.ItemPage"
+                    Title="Items"
+                    BackgroundColor="#040210">
+
+    <Grid>
+
+        <!-- Background -->
+        <Image Source="start.png"
+               Aspect="AspectFill"
+               Opacity="0.3"/>
+
+        <BoxView Color="#040210"
+                 Opacity="0.6"/>
+
+        <!-- Main Layout -->
+        <VerticalStackLayout Padding="24,48,24,32"
+                             Spacing="0"
+                             VerticalOptions="Fill">
+
+            <!-- Header -->
+            <Image Source="inventory.png"
+                   WidthRequest="60"
+                   HeightRequest="60"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,8"/>
+
+            <Label Text="กระเป๋า"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   TextColor="#c4a6ef"
+                   CharacterSpacing="4"
+                   HorizontalOptions="Center"
+                   FontFamily="Georgia"/>
+
+            <!-- Divider -->
+            <BoxView Color="#4c1d95"
+                     HeightRequest="1"
+                     WidthRequest="260"
+                     HorizontalOptions="Center"
+                     Margin="0,12,0,40"
+                     Opacity="0.7"/>
+
+            <!-- Items -->
+            <VerticalStackLayout VerticalOptions="CenterAndExpand">
+
+                <!-- ================= POTION ================= -->
+                <Border Stroke="#16a34a"
+                        StrokeThickness="1.5"
+                        BackgroundColor="#0f1a0a"
+                        Margin="0,0,0,18"
+                        Padding="24,22">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+
+                    <Grid ColumnDefinitions="70,*,Auto"
+                          ColumnSpacing="18"
+                          MinimumHeightRequest="90">
+
+                        <!-- Icon -->
+                        <Border Grid.Column="0"
+                                BackgroundColor="#0a1508"
+                                Stroke="#16a34a"
+                                StrokeThickness="1.5"
+                                WidthRequest="60"
+                                HeightRequest="60"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+
+                            <Image Source="potions.png"
+                                   WidthRequest="125"
+                                   HeightRequest="125"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- Text -->
+                        <VerticalStackLayout Grid.Column="1"
+                                             VerticalOptions="Center"
+                                             Spacing="4">
+
+                            <Label Text="น้ำยา"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#86efac"
+                                   CharacterSpacing="2"
+                                   FontFamily="Georgia"/>
+
+                            <!-- จำนวน Potion -->
+                            <Label FontSize="16"
+                                   TextColor="#4ade80"
+                                   Opacity="0.85">
+
+                                <Label.Text>
+                                    <MultiBinding StringFormat="เพิ่มเลือด + 20 หน่วย   x{0}">
+                                        <Binding Path="Player.Potions"/>
+                                    </MultiBinding>
+                                </Label.Text>
+
+                            </Label>
+
+                        </VerticalStackLayout>
+
+                        <!-- Button -->
+                        <Border Grid.Column="2"
+                                BackgroundColor="#0f1a0a"
+                                Stroke="#16a34a"
+                                StrokeThickness="1.5"
+                                Padding="18,12"
+                                VerticalOptions="Center">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+
+                            <Label Text="ใช้"
+                                   FontSize="15"
+                                   TextColor="#86efac"
+                                   CharacterSpacing="1.5"
+                                   FontFamily="Georgia"/>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnPotionClicked"/>
+                            </Border.GestureRecognizers>
+
+                        </Border>
+
+                    </Grid>
+
+                </Border>
+
+                <!-- ================= ETHER ================= -->
+                <Border Stroke="#2563eb"
+                        StrokeThickness="1.5"
+                        BackgroundColor="#0a1538"
+                        Margin="0,0,0,28"
+                        Padding="24,22">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+
+                    <Grid ColumnDefinitions="70,*,Auto"
+                          ColumnSpacing="18"
+                          MinimumHeightRequest="90">
+
+                        <!-- Icon -->
+                        <Border Grid.Column="0"
+                                BackgroundColor="#060e28"
+                                Stroke="#2563eb"
+                                StrokeThickness="1.5"
+                                WidthRequest="60"
+                                HeightRequest="60"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+
+                            <Image Source="manas.png"
+                                   WidthRequest="125"
+                                   HeightRequest="125"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- Text -->
+                        <VerticalStackLayout Grid.Column="1"
+                                             VerticalOptions="Center"
+                                             Spacing="4">
+
+                            <Label Text="อิสเตอร์"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#93c5fd"
+                                   CharacterSpacing="2"
+                                   FontFamily="Georgia"/>
+
+                            <!-- จำนวน Ether -->
+                            <Label FontSize="16"
+                                   TextColor="#60a5fa"
+                                   Opacity="0.85">
+
+                                <Label.Text>
+                                    <MultiBinding StringFormat="เพิ่มมานา +10 หน่วย   x{0}">
+                                        <Binding Path="Player.Ethers"/>
+                                    </MultiBinding>
+                                </Label.Text>
+
+                            </Label>
+
+                        </VerticalStackLayout>
+
+                        <!-- Button -->
+                        <Border Grid.Column="2"
+                                BackgroundColor="#0a1538"
+                                Stroke="#2563eb"
+                                StrokeThickness="1.5"
+                                Padding="18,12"
+                                VerticalOptions="Center">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+
+                            <Label Text="ใช้"
+                                   FontSize="15"
+                                   TextColor="#93c5fd"
+                                   CharacterSpacing="1.5"
+                                   FontFamily="Georgia"/>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEtherClicked"/>
+                            </Border.GestureRecognizers>
+
+                        </Border>
+
+                    </Grid>
+
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- Bottom Divider -->
+            <BoxView Color="#4c1d95"
+                     HeightRequest="1"
+                     WidthRequest="260"
+                     HorizontalOptions="Center"
+                     Margin="0,20,0,20"
+                     Opacity="0.5"/>
+
+            <!-- Back Button -->
+            <Border Stroke="#6d28d9"
+                    StrokeThickness="1"
+                    BackgroundColor="#1e0a38"
+                    Padding="0,12"
+                    WidthRequest="160"
+                    HorizontalOptions="Center">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="4"/>
+                </Border.StrokeShape>
+
+                <Label Text="← กลับ"
+                       FontSize="18"
+                       TextColor="#c4b5fd"
+                       CharacterSpacing="2"
+                       FontFamily="Georgia"
+                       HorizontalOptions="Center"/>
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackClicked"/>
+                </Border.GestureRecognizers>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+    </Grid>
+
+</views:BaseGamePage>

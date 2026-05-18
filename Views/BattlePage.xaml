@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseGamePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:views="clr-namespace:TurnBase.Views"
+                    x:Class="TurnBase.Views.BattlePage"
+                    Title="BattlePage"
+                    BackgroundColor="#040210">
+
+    <Grid>
+        <Image Source="cave.png" Aspect="AspectFill" Opacity="0.25"/>
+        <BoxView  Opacity="0.55"/>
+
+        <Grid RowDefinitions="*,Auto" Padding="18,40,18,18">
+
+            <Grid Grid.Row="0" RowDefinitions="Auto,*,Auto">
+
+                <!-- ===== ENEMY ===== -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,140" Margin="0,0,0,10">
+                    <Border Grid.Column="0" BackgroundColor="#12071f"
+                            Stroke="#7c3aed" StrokeThickness="1.5"
+                            Padding="14,10" Margin="0,0,12,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="6">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="{Binding Enemy.Name}"
+                                       FontSize="16" FontAttributes="Bold"
+                                       TextColor="#fca5a5" FontFamily="Georgia"/>
+                                <Label Grid.Column="1" FontSize="12" TextColor="#fcd5d5">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="HP {0}/{1}">
+                                            <Binding Path="Enemy.CurrentHP"/>
+                                            <Binding Path="Enemy.MaxHP"/>
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </Grid>
+                            <Grid HeightRequest="10">
+                                <BoxView BackgroundColor="#2b1020" CornerRadius="5"/>
+                                <BoxView BackgroundColor="#dc2626" CornerRadius="5"
+                                         HorizontalOptions="Start"
+                                         WidthRequest="{Binding EnemyHPBarWidth}"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- ===== BATTLE AREA ===== -->
+                <Grid Grid.Row="1">
+
+                    <Ellipse Fill="#1a0f2e" HeightRequest="90" WidthRequest="180"
+                             HorizontalOptions="Start" VerticalOptions="End" Margin="20,0,0,20"/>
+                    <Ellipse Fill="#2b153f" HeightRequest="70" WidthRequest="150"
+                             HorizontalOptions="End" VerticalOptions="Start" Margin="0,20,30,0"/>
+
+                    <!-- Player sprite -->
+                    <Image x:Name="PlayerSprite"
+                           Source="{Binding Player.Sprite}"
+                           HeightRequest="150" Aspect="AspectFit"
+                           HorizontalOptions="Start" VerticalOptions="End"
+                           Margin="0,0,80,10"/>
+
+                    <!-- Enemy sprite -->
+                    <Image x:Name="EnemySprite"
+                           Source="{Binding Enemy.Sprite}"
+                           HeightRequest="120" Aspect="AspectFit"
+                           HorizontalOptions="End" VerticalOptions="Start"
+                           Margin="0,-10,45,0"/>
+
+                    <!-- Enemy hit flash -->
+                    <BoxView x:Name="EnemyFlash"
+                             Color="Red" Opacity="0"
+                             HorizontalOptions="End" VerticalOptions="Start"
+                             WidthRequest="120" HeightRequest="120"
+                             Margin="0,-10,45,0"/>
+
+                    <!-- Player hit flash -->
+                    <BoxView x:Name="PlayerFlash"
+                             Color="#7c3aed" Opacity="0"
+                             HorizontalOptions="Start" VerticalOptions="End"
+                             WidthRequest="150" HeightRequest="150"
+                             Margin="0,0,80,10"/>
+
+                    <!-- Slash effect -->
+                    <Label x:Name="SlashLabel"
+                           Text="⚡" FontSize="48"
+                           Opacity="0"
+                           HorizontalOptions="End"
+                           VerticalOptions="Start"
+                           Margin="0,10,60,0"
+                           ZIndex="10"/>
+
+                    <!-- Skill effect -->
+                    <Label x:Name="SkillLabel"
+                           Text="✨" FontSize="56"
+                           Opacity="0"
+                           HorizontalOptions="End"
+                           VerticalOptions="Start"
+                           Margin="0,10,60,0"
+                           ZIndex="10"/>
+
+                </Grid>
+
+                <!-- ===== PLAYER INFO ===== -->
+                <Grid Grid.Row="2" ColumnDefinitions="140,*" Margin="0,10,0,0">
+
+
+                    <Border Grid.ColumnSpan="3" BackgroundColor="#12071f"
+                            Stroke="#7c3aed" StrokeThickness="1.5" Padding="20,12">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="8">
+                            <Grid ColumnDefinitions="*,*">
+                                <Label Grid.Column="0" Text="{Binding Player.ID}"
+                                       FontSize="18" FontAttributes="Bold"
+                                       TextColor="#ddd6fe" FontFamily="Georgia"/>
+                                <Label Grid.Column="1" TextColor="#c4b5fd" 
+                                       FontSize="12" Margin="100,0,0,-100" >
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="HP {0}/{1}">
+                                            <Binding Path="Player.CurrentHP"/>
+                                            <Binding Path="Player.MaxHP"/>
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+
+                            </Grid>
+                            <Grid ColumnDefinitions="*,*">
+                                <Grid HeightRequest="10">
+                                    <BoxView BackgroundColor="#24103c" CornerRadius="5"/>
+                                    <BoxView BackgroundColor="#7c3aed" CornerRadius="5"
+                                         HorizontalOptions="Start"
+                                         WidthRequest="{Binding PlayerHPBarWidth}"/>
+                                </Grid>
+                            </Grid>
+                            <Grid ColumnDefinitions="*,*">
+                                <Grid Grid.Column="0"
+                                    HeightRequest="8">
+                                    <BoxView BackgroundColor="#111c3d" CornerRadius="4"/>
+                                    <BoxView BackgroundColor="#2563eb" CornerRadius="4"
+                                             HorizontalOptions="Start"
+                                             WidthRequest="{Binding PlayerMPBarWidth}"/>
+                                </Grid>
+                                <Label Grid.Column="1" FontSize="11"
+                                       TextColor="#93c5fd" Margin="100,5,0,9">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="MP {0}/{1}">
+                                            <Binding Path="Player.MP"/>
+                                            <Binding Path="Player.MaxMP"/>
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+            </Grid>
+
+            <!-- ===== ACTION MENU ===== -->
+            <Grid Grid.Row="1" ColumnDefinitions="1.2*,*" Margin="0,18,0,0">
+
+                <Border Grid.Column="0" BackgroundColor="#0d0618"
+                        Stroke="#7c3aed" StrokeThickness="1.5"
+                        Padding="16,12" Margin="0,0,12,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Label Text="{Binding BattleLog}" TextColor="#ddd6fe"
+                           FontSize="13" LineBreakMode="WordWrap" FontFamily="Georgia"/>
+                </Border>
+
+                <Grid Grid.Column="1" ColumnDefinitions="*,*" RowDefinitions="*,*"
+                      ColumnSpacing="10" RowSpacing="10">
+
+                    <Border Grid.Row="0" Grid.Column="0"
+                            BackgroundColor="#2a114d" Stroke="#a855f7" StrokeThickness="1.5">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="4">
+                            <Label Text="⚔️" FontSize="24" HorizontalOptions="Center"/>
+                            <Label Text="โจมตี" FontSize="12" FontAttributes="Bold"
+                                   TextColor="#e9d5ff" CharacterSpacing="2"/>
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnAttackClicked"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                    <Border Grid.Row="0" Grid.Column="1"
+                            BackgroundColor="#0f1d42" Stroke="#3b82f6" StrokeThickness="1.5">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="4">
+                            <Label Text="🔮" FontSize="24" HorizontalOptions="Center"/>
+                            <Label Text="สกิล" FontSize="12" FontAttributes="Bold"
+                                   TextColor="#bfdbfe" CharacterSpacing="2"/>
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSkillClicked"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="0"
+                            BackgroundColor="#10210d" Stroke="#22c55e" StrokeThickness="1.5">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="4">
+                            <Label Text="🛡️" FontSize="24" HorizontalOptions="Center"/>
+                            <Label Text="ป้องกัน" FontSize="12" FontAttributes="Bold"
+                                   TextColor="#bbf7d0" CharacterSpacing="2"/>
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnGuardClicked"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="1"
+                            BackgroundColor="#2d1805" Stroke="#f59e0b" StrokeThickness="1.5">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="4">
+                            <Label Text="🎒" FontSize="24" HorizontalOptions="Center"/>
+                            <Label Text="ไอเท็ม" FontSize="12" FontAttributes="Bold"
+                                   TextColor="#fde68a" CharacterSpacing="2"/>
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnItemClicked"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                </Grid>
+            </Grid>
+
+        </Grid>
+    </Grid>
+
+</views:BaseGamePage>

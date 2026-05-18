@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TurnBase.Views.EndStoryPage"
+             BackgroundColor="#040210"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid>
+        <Image x:Name="ImgEndingBackground" 
+               Aspect="AspectFill" 
+               Opacity="1" />
+
+        <BoxView Color="Black" Opacity="0.4" />
+
+        <ScrollView x:Name="StoryScrollView" 
+                    Margin="20,0,20,80" 
+                    VerticalOptions="End"
+                    Opacity="0">
+            <Label x:Name="LblEndContent" 
+                   TextColor="#e2e8f0" 
+                   FontSize="15" 
+                   LineHeight="1.5"
+                   HorizontalTextAlignment="Start"
+                   FontFamily="Georgia" 
+                   Margin="10, 20">
+                <Label.Shadow>
+                    <Shadow Brush="Black" Offset="2,2" Radius="3" Opacity="1" />
+                </Label.Shadow>
+            </Label>
+        </ScrollView>
+
+        <VerticalStackLayout x:Name="TitleLayout" 
+                             VerticalOptions="Center" 
+                             HorizontalOptions="Center" 
+                             Opacity="0"
+                             InputTransparent="True">
+
+            <Label Text="THE END"
+                   TextColor="#D8B4FE" 
+                   FontSize="36" 
+                   FontAttributes="Bold" 
+                   HorizontalTextAlignment="Center" 
+                   FontFamily="Georgia" >
+                <Label.Shadow>
+                    <Shadow Brush="Black" Offset="2,2" Radius="3" Opacity="1" />
+                </Label.Shadow>
+            </Label>
+
+            <BoxView Color="#D8B4FE" 
+                     HeightRequest="2" 
+                     WidthRequest="200" 
+                     HorizontalOptions="Center" 
+                     Margin="0,15,0,30"/>
+
+            <Button x:Name="BtnNext"
+                    Text="RETURN TO MAIN MENU ►" 
+                    BackgroundColor="Transparent"
+                    TextColor="#D8B4FE"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Clicked="OnBackToMenuClicked" />
+        </VerticalStackLayout>
+
+        <BoxView x:Name="WhiteFadeOverlay" 
+                 Color="White" 
+                 Opacity="1" 
+                 InputTransparent="True" />
+
+    </Grid>
+</ContentPage>
